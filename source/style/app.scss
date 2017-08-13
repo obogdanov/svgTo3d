@@ -1,0 +1,21 @@
+body {
+  margin: 0;
+}
+.svg {
+	display: none;
+}
+.wrapper {
+	position: relative;
+	width: 100vw;
+	height: 100vh;
+}
+.object {
+	position: absolute;
+	box-sizing: border-box;
+	left: 50%;
+	top: 50%;
+	width: 100px;
+	height: 100px;
+	background-color: #07B8F7;
+	border: 1px solid black;
+}
