@@ -14,8 +14,9 @@ html
 		script(src='/assets/js/app.js' defer)
 	body
 		.svg
-			include svg.pug
+			//- include svg.pug
 		.wrapper
-			#object.object 1
+			#object.object
+				include svg.pug
 				//- .element
 		

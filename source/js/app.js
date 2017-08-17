@@ -21,23 +21,25 @@ $(function () {
 
 	$(coord).each(function () {
 		var linePar = {},
-			x1 = $(this)[0].x1,
-			x2 = $(this)[0].x2,
-			y1 = $(this)[0].y1,
-			y2 = $(this)[0].y2;
+			x1 = this.x1,
+			x2 = this.x2,
+			y1 = this.y1,
+			y2 = this.y2;
 		linePar.ang = Math.round(Math.atan((y2 - y1)/(x2 - x1))/Math.PI*180);
 		linePar.lineLength = Math.sqrt((x2 - x1)*(x2 - x1)+(y2 - y1)*(y2 - y1));
-		linePar.centX = (x2 - x1)/2 + x1;
-		linePar.centY = (y2 - y1)/2 + y1;
+		linePar.moveX = x1;
+		linePar.moveY = y1;
 		parameters.push(linePar);
 	})
-
+console.log(coord);
+console.log(parameters);
 // Applying CSS and creating elements
 
 $(parameters).each(function () {
-	
-	var transformX = this.centX,
-		transformZ = this.lineLength/2;
+	var transformX = this.moveX,
+		transformY = this.moveY,
+		transformZ = this.lineLength,
+		lineLength = this.lineLength,
 		ang 	   = this.ang;
 
 	var element = $('<div/>', {
@@ -45,7 +47,8 @@ $(parameters).each(function () {
 	});
 
 	$(element).css({
-		'transform':'translateX('+transformX+'px) translateZ('+transformZ+'px) rotate3d(0,'+ang+',0,90deg)'
+		'transform':'translateX('+transformX+'px) translateY('+transformY+'px) translateZ(100px) rotateZ('+ang+'deg) rotateX(-90deg)',
+		'width':lineLength+'px'
 	});
 
 	$('.object').append(element);
