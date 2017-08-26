@@ -9,6 +9,7 @@ body {
 	width: 100vw;
 	height: 100vh;
 }
+
 .object {
 	display: flex;
 	position: absolute;
@@ -17,7 +18,7 @@ body {
 	transform-style: preserve-3d;
 	left: 50%;
 	top: 50%;
-	transform-origin: 50px 50px;
+	transform-origin: 50% 50%;
 	height: 100px;
 	text-align: center;
 	background-color: #0863F6;
@@ -30,11 +31,11 @@ body {
 	top: 0;
 	left: 0%;
 	position: absolute;
-	transform-origin: 50% 50%;
+	transform-origin: 0% 0%;
 	height: 100px;
-	background-color: #07B8F7;
-	opacity: 0.3;
+	background-color: #E81631;
+	opacity: 0.5;
 	transform:translateZ(0px);
-	transition: all ease 1s;
+	transition: transform ease 1s;
 	// transform: translate3d(150px,0,0) rotate3d(0,0,0,90deg);
 }

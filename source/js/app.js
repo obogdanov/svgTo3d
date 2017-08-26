@@ -27,19 +27,29 @@ $(function () {
 			x2 = this.x2,
 			y1 = this.y1,
 			y2 = this.y2;
-		linePar.ang = Math.round(Math.atan((y2 - y1)/(x2 - x1))/Math.PI*180);
+		if (((x1 < x2) && (y1 > y2)) || ((x1 > x2) && (y1 < y2))) {
+			linePar.angPar = -1;
+		}
+		else linePar.angPar = 1;
 		var x1 = Math.min(this.x1, this.x2),
 			x2 = Math.max(this.x1, this.x2),
 			y1 = Math.min(this.y1, this.y2),
 			y2 = Math.max(this.y1, this.y2);
+		linePar.ang = Math.round(Math.atan((y2 - y1)/(x2 - x1))/Math.PI*180);
 		linePar.lineLength = Math.sqrt((x2 - x1)*(x2 - x1)+(y2 - y1)*(y2 - y1));
-		if (x2 - x1 == 0){
-			linePar.moveX = (x2 - x1)/2 + x1 - 0.5*w
-		}
-			else {
-		linePar.moveX = (x2 - x1)/2 + x1 - 0.5*w - (linePar.lineLength - Math.abs(x2 - x1))/2;
+			if (linePar.angPar == -1) {
+				linePar.moveX = x1;
 			}
-		linePar.moveY = (y2 - y1)/2 + y1 - 0.5*h;
+			else {
+				linePar.moveX = x1;
+			}
+				if (linePar.angPar == -1) {
+				linePar.moveY = y2;
+			}
+			else {
+				linePar.moveY = y1;
+			}
+			
 		parameters.push(linePar);
 	})
 	console.log(coord);
@@ -47,49 +57,53 @@ $(function () {
 // creating elements and applying CSS
 
 
-$(parameters).each(function () {
-	var el = $('<div/>', {
-		class: 'element',
+	$(parameters).each(function () {
+		var el = $('<div/>', {
+			class: 'element',
+		});
+
+	$('.object').append(el);
 	});
 
-$('.object').append(el);
-});
+	var elements = $('.element');
 
-var elements = $('.element');
+	var css = function (z) {
 
-var css = function (z) {
+		for (let i = 0; i < elements.length; i++) {
 
-	for (let i = 0; i < elements.length; i++) {
+			var elCss = parameters[i],
 
-		var elCss = parameters[i],
+				X = parameters[i].moveX,
+				Y = parameters[i].moveY,
+				// Z = parameters[i].lineLength,
+				lineLength = parameters[i].lineLength,
+				ang 	   = parameters[i].ang;
+				angPar     = parameters[i].angPar;
 
-			X = parameters[i].moveX,
-			Y = parameters[i].moveY,
-			// Z = parameters[i].lineLength,
-			lineLength = parameters[i].lineLength,
-			ang 	   = parameters[i].ang;
+				$(elements[i]).css({
+					'transform':'translateX('+X+'px) translateY('+Y+'px) translateZ('+z+'px) rotateZ('+angPar*ang+'deg) rotateX(-90deg)',
+					'width':lineLength+'px'
+					// 'transform-origin':0.5*lineLength+'px' +" "+ 0.5*lineLength+'px'
+				});
+		}
+	};
 
-			$(elements[i]).css({
-				'transform':'translateX('+X+'px) translateY('+Y+'px) translateZ('+z+'px) rotateZ('+ang+'deg) rotateX(-90deg)',
-				'width':lineLength+'px'
-				// 'transform-origin':0.5*lineLength+'px' +" "+ 0.5*lineLength+'px'
-			});
-	}
-};
+	css(0);
 
-css(-50);
-
-$('#object').on('click', function () {
-	css(50);
-});
+	$('#object').on('click', function () {
+		css(100);
+		rotate();
+	});
 
 });
 //Rotating with mouse
  
-	$(function(){
+	var rotate = function(){
 		$(document).on('mousemove', function(e){
+			var X = -0.5*document.documentElement.clientWidth + e.pageX,
+				Y = -0.5*document.documentElement.clientHeight + e.pageY;
 			$('#object').css({
-				'transform':'rotateX('+e.pageY+'deg) rotateY('+e.pageX+'deg)'
+				'transform':'rotateX('+Y+'deg) rotateY('+X+'deg)'
 			});
 		});
-	});
+	};
