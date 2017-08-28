@@ -1,7 +1,6 @@
 $(function () {
 
 	// getting coord and creating massive of coordinates from svg element "line"
-
 	// var lineCoord for coordinates from each line element
 	//     coord for all coordinates in all elements
 
@@ -10,15 +9,31 @@ $(function () {
 		w = parseInt(object.attr('width'), 10),
 		h = parseInt(object.attr('height'), 10)
 	$('line').each(function () {
-		var el = $(this),
-		lineCoord = {};
+		var el 		     = $(this),
+			lineCoord    = {};
 		lineCoord.x1 = parseInt(el.attr('x1'), 10),
 		lineCoord.y1 = parseInt(el.attr('y1'), 10),
 		lineCoord.x2 = parseInt(el.attr('x2'), 10),
 		lineCoord.y2 = parseInt(el.attr('y2'), 10);
 		coord.push(lineCoord);
 	});
+	$('path').each(function () {
+		var lineCoord = {},
+			el = $(this),
+			line = el.attr('d').slice(2).split(" ");
+			$(line).each(function () {
+				console.log(this.split(','));
+			})
 
+		// 	pathLength = path.getTotalLength();
+		// lineCoord.x1 = path.getPointAtLength(0).x;
+		// lineCoord.y1 = path.getPointAtLength(0).y;
+		// lineCoord.x2 = path.getPointAtLength(pathLength).x;
+		// lineCoord.y2 = path.getPointAtLength(pathLength).y;
+		console.log(line);
+		// coord.push(lineCoord);
+
+	});
 	var parameters = [];
 	
 	$(coord).each(function () {
@@ -51,7 +66,8 @@ $(function () {
 			}
 			
 		parameters.push(linePar);
-	})
+	});
+
 	console.log(coord);
 	console.log(parameters);
 // creating elements and applying CSS
@@ -95,9 +111,8 @@ $(function () {
 		rotate();
 	});
 
-});
-//Rotating with mouse
- 
+	//Rotating with mouse
+
 	var rotate = function(){
 		$(document).on('mousemove', function(e){
 			var X = -0.5*document.documentElement.clientWidth + e.pageX,
@@ -107,3 +122,6 @@ $(function () {
 			});
 		});
 	};
+
+
+});
