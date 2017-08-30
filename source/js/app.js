@@ -21,18 +21,25 @@ $(function () {
 		var lineCoord = {},
 			el = $(this),
 			line = el.attr('d').slice(2).split(" ");
-			$(line).each(function () {
-				console.log(this.split(','));
-			})
-
-		// 	pathLength = path.getTotalLength();
-		// lineCoord.x1 = path.getPointAtLength(0).x;
-		// lineCoord.y1 = path.getPointAtLength(0).y;
-		// lineCoord.x2 = path.getPointAtLength(pathLength).x;
-		// lineCoord.y2 = path.getPointAtLength(pathLength).y;
-		console.log(line);
-		// coord.push(lineCoord);
-
+			console.log(line);
+			for ( let i = 0; i <= line.length-1; i++) {
+				if (line[i+1]) {
+					lineCoord.x1 = line[i].split(",")[0];
+					lineCoord.y1 = line[i].split(",")[1];
+					lineCoord.x2 = line[i+1].split(",")[0];
+					lineCoord.y2 = line[i+1].split(",")[1];
+					coord.push(lineCoord);
+					console.log("x1"+" "+lineCoord.x1);
+					console.log("y1"+" "+lineCoord.y1);
+					console.log("x2"+" "+lineCoord.x2);
+					console.log("y2"+" "+lineCoord.y2);
+			}
+				else break;
+				
+				
+				
+			}
+			
 	});
 	var parameters = [];
 	
