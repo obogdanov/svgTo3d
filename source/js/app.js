@@ -18,27 +18,28 @@ $(function () {
 		coord.push(lineCoord);
 	});
 	$('path').each(function () {
-		var lineCoord = {},
-			el = $(this),
+		var el = $(this),
 			line = el.attr('d').slice(2).split(" ");
-			console.log(line);
+			tempArr = [];
 			for ( let i = 0; i <= line.length-1; i++) {
-				if (line[i+1]) {
-					lineCoord.x1 = line[i].split(",")[0];
-					lineCoord.y1 = line[i].split(",")[1];
-					lineCoord.x2 = line[i+1].split(",")[0];
-					lineCoord.y2 = line[i+1].split(",")[1];
-					coord.push(lineCoord);
-					console.log("x1"+" "+lineCoord.x1);
-					console.log("y1"+" "+lineCoord.y1);
-					console.log("x2"+" "+lineCoord.x2);
-					console.log("y2"+" "+lineCoord.y2);
-			}
+				if (line[i+1])
+					tempArr.push(line.slice([i],[i+2]))
 				else break;
-				
-				
-				
 			}
+			$(tempArr).each(function () {
+				console.log(this);
+				var lineCoord = {};
+				lineCoord.x1 = +this[0].split(",")[0];
+				lineCoord.y1 = +this[0].split(",")[1];
+				lineCoord.x2 = +this[1].split(",")[0];
+				lineCoord.y2 = +this[1].split(",")[1];
+				coord.push(lineCoord);
+				console.log(lineCoord.x1+", "+lineCoord.y1+", "+lineCoord.x2+", "+lineCoord.y2);
+			})
+				// console.log(coord);
+				
+				
+			
 			
 	});
 	var parameters = [];
@@ -111,10 +112,10 @@ $(function () {
 		}
 	};
 
-	css(0);
+	css(20);
 
 	$('#object').on('click', function () {
-		css(100);
+		css(80);
 		rotate();
 	});
 
